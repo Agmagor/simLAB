@@ -165,6 +165,22 @@ class FileParser(object):
         length = len(impi)
         value = "%02X%02X%s" %(tag, length, impi.encode('hex'))
         return value
+    
+    def getEfDomain(self, data):
+        valueRaw = types.removeTrailingBytes(hextools.hex2bytes(data), 0xFF)
+        if len(valueRaw) < 3:
+            return ''
+        value = hextools.bytes2hex(valueRaw[2:]).decode("hex")
+        return "domain=%s" %value
+
+    def setEfDomain(self, data):
+        domain = types.getParamValue(data, "impi")
+        if not domain:
+            raise Exception("domain not provided")
+        tag = 0x80
+        length = len(domain)
+        value = "%02X%02X%s" %(tag, length, domain.encode('hex'))
+        return value
 
     def getEfPcscf(self, data):
         #TODO: handle many records
