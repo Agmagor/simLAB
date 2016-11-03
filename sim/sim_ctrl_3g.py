@@ -1259,7 +1259,7 @@ class SimCtrl(object):
                                                        se01])
         types.addTlv(data, types.FILE_SIZE_TAG, [fileSize >> 8,
                                                  fileSize & 0xFF])
-        types.addTlv(data, types.SFI_TAG, [])
+        types.addTlv(data, types.SFI_TAG, [sfi & 0x1F])
         dataHex = hextools.bytes2hex(data)
         dataHex = types.addMainTlv(dataHex, types.FCP_TEMPLATE_TAG)
         header = [0x00, 0xE0, 0x00, 0x00, len(dataHex)/2]
